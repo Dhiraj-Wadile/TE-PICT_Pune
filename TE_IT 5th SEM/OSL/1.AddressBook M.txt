@@ -1,0 +1,145 @@
+#!/bin/bash
+
+# Function to create a new music database file
+create() {
+    echo "Enter Database name: "
+    read db
+    if [ -f "$db" ]; then
+        echo "Error: Database already exists!"
+    else
+        touch "$db"
+        echo "Database Created!"
+    fi
+}
+
+# Function to display the contents of the music database file
+display() {
+    echo "Enter Database name: "
+    read db
+    if [ -f "$db" ]; then
+        cat "$db"
+    else
+        echo "Error: Database does not exist."
+    fi
+    echo
+}
+
+# Function to insert a new song detail into the music database file
+insert() {
+    echo "Enter Database name: "
+    read db
+    if [ -f "$db" ]; then
+        echo "Enter song name: "
+        read song_name
+        echo "Enter artist name: "
+        read artist_name
+        echo "Enter album name: "
+        read album_name
+        echo "Enter release year: "
+        read release_year
+        echo "$song_name - $artist_name - $album_name - $release_year" >> "$db"
+        echo "Song detail inserted successfully!"
+    else
+        echo "Error: Database does not exist."
+    fi
+    echo
+}
+
+# Function to delete a song detail from the music database by name
+delete() {
+    echo "Enter Database name: "
+    read db
+    echo "Enter the name of the song you want to delete: "
+    read song_name
+    if [ -f "$db" ]; then
+        if grep -q "$song_name" "$db"; then
+            grep -v "$song_name" "$db" > temp.txt
+            mv temp.txt "$db"
+            echo "Song detail deleted successfully!"
+        else
+            echo "Song not found in the database."
+        fi
+    else
+        echo "Error: Database does not exist."
+    fi
+    echo
+}
+
+# Function to modify a song detail in the music database by name
+modify() {
+    echo "Enter Database name: "
+    read db
+    echo "Enter the name of the song you want to modify: "
+    read song_name
+    if [ -f "$db" ]; then
+        if grep -q "$song_name" "$db"; then
+            echo "Enter new song name: "
+            read new_song_name
+            echo "Enter new artist name: "
+            read new_artist_name
+            echo "Enter new album name: "
+            read new_album_name
+            echo "Enter new release year: "
+            read new_release_year
+            # Use 'sed' to replace the line containing the old record with the new record
+            sed -i "s/$song_name - .*/$new_song_name - $new_artist_name - $new_album_name - $new_release_year/" "$db"
+            echo "Song detail modified successfully!"
+        else
+            echo "Song not found in the database."
+        fi
+    else
+        echo "Error: Database does not exist."
+    fi
+    echo
+}
+
+# Function to search for a song detail by name in the music database
+search_by_name() {
+    echo "Enter Database name: "
+    read db
+    echo "Enter the name of the song you want to search for: "
+    read song_name
+    if [ -f "$db" ]; then
+        result=$(grep "$song_name" "$db")
+        if [ -z "$result" ]; then
+            echo "No songs found with the name: $song_name"
+        else
+            echo "Songs found with the name: $song_name"
+            echo "$result"
+        fi
+    else
+        echo "Error: Database does not exist."
+    fi
+}
+
+# Function to display the menu options
+menu() {
+    echo "**************"
+    echo "* a) Create   * "
+    echo "* b) Display  * "
+    echo "* c) Insert   * "
+    echo "* d) Search   * "
+    echo "* e) Delete   * "
+    echo "* f) Modify   * "
+    echo "* g) Exit     *"
+    echo "**************"
+}
+
+# Infinite loop to keep the program running until the user chooses to exit
+while true; do
+    menu
+    echo "Enter your choice: "
+    read choice
+    echo
+    case $choice in
+        a) create ;;
+        b) display ;;
+        c) insert ;;
+        d) search_by_name ;;
+        e) delete ;;
+        f) modify ;;
+        g) exit 0 ;;
+        *) echo "Invalid Choice. Please enter a valid option." ;;
+    esac
+    echo
+done

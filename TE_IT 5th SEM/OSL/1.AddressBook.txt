@@ -1,0 +1,200 @@
+#!/bin/bash
+
+# Initialize a variable to keep track of the current highest ID
+current_id=0
+
+# Function to create a new address book file
+create() {
+    echo "Enter AddressBook name: "
+    read ab
+    res=$(ls | grep "$ab" | wc -w)
+
+    if [ $res -gt 0 ]; then
+        echo "Error: File is already existing!"
+    else
+        touch "$ab"
+        echo "Address Book Created!"
+    fi
+}
+
+# Function to get the next available ID
+get_next_id() {
+    current_id=$((current_id + 1))
+    echo "$current_id"
+}
+
+# Function to display the contents of the address book file
+display() {
+    echo "Enter AddressBook name: "
+    read ab
+    if [ -f "$ab" ]; then
+        cat "$ab"
+    else
+        echo "Error: Address Book does not exist."
+    fi
+    echo
+}
+
+# Function to insert a new record into the address book file
+insert() {
+    echo "Enter AddressBook name: "
+    read ab
+    if [ -f "$ab" ]; then
+        id=$(get_next_id)
+        while true; do
+            echo "Enter name: "
+            read name
+            # Validate name does not contain special characters
+            if [[ "$name" =~ [^a-zA-Z[:space:]] ]]; then
+                echo "Invalid name. Name should only contain letters, numbers, and spaces."
+            else
+                break
+            fi
+        done
+        while true; do
+            echo "Enter phone: "
+            read phone
+            # Validate phone is numeric
+            if ! [[ "$phone" =~ ^[0-9]{10}$ ]]; then
+                echo "Invalid phone number. Please enter a valid numeric value with 10 digits."
+            else
+                break
+            fi
+        done
+        while true; do
+            echo "Enter city: "
+            read city
+            # Validate city does not contain special characters
+            if [[ "$city" =~ [^a-zA-Z0-9[:space:]] ]]; then
+                echo "Invalid city. City should only contain letters, numbers, and spaces."
+            else
+                break
+            fi
+        done
+        while true; do
+            echo "Enter pincode: "
+            read pincode
+            # Validate pincode is numeric
+            if ! [[ "$pincode" =~ ^[0-9]{6}$ ]]; then
+                echo "Invalid pincode. Please enter a valid numeric value with 6 digits."
+            else
+                break
+            fi
+        done
+        echo "$id $name $phone $city $pincode" >> "$ab"
+        echo "Insert Successfully"
+        ((current_id++))
+    else
+        echo "Error: Address Book does not exist."
+    fi
+    echo
+}
+
+# Function to delete a record from the address book file by ID
+delete() {
+    echo "Enter AddressBook name: "
+    read ab
+    echo "Enter the ID you want to delete"
+    read id
+    if [ -f "$ab" ]; then
+        # Check if the record with the specified ID exists
+        if ! grep -q "^$id\s" "$ab"; then
+            echo "Record with ID $id not found."
+        else
+            # Create a temporary file without the record to be deleted, then replace the original file
+            grep -v "^$id\s" "$ab" > temp.txt
+            mv temp.txt "$ab"
+            echo "Record Deleted Successfully"
+        fi
+    else
+        echo "Error: Address Book does not exist."
+    fi
+    echo
+}
+
+# Function to modify a record in the address book file by ID
+modify() {
+    echo "Enter AddressBook name: "
+    read ab
+    echo "Enter the ID you want to Modify"
+    read id
+    if [ -f "$ab" ]; then
+        # Check if the record with the specified ID exists
+        if ! grep -q "^$id\s" "$ab"; then
+            echo "Record with ID $id not found."
+        else
+            # Read the new values with the desired formatting
+            echo "Enter new name: "
+            read name
+            echo "Enter new phone: "
+            read phone
+            echo "Enter new city: "
+            read city
+            echo "Enter new pincode: "
+            read pincode
+            # Use 'sed' command to replace the line containing the old record with the new record
+            sed -i "/^$id\s/c$id $name $phone $city $pincode" "$ab"
+            echo "Modified Successfully"
+        fi
+    else
+        echo "Error: Address Book does not exist."
+    fi
+    echo
+}
+
+# Function to search for a record by name in the address book
+search_by_name() {
+    echo "Enter AddressBook name: "
+    read ab
+    echo "Enter the name you want to search for: "
+    read name
+    if [ -f "$ab" ]; then
+        # Use 'grep' to find records with the specified name
+        result=$(grep -i "$name" "$ab")
+        if [ -z "$result" ]; then
+            echo "No records found with the name: $name"
+        else
+            echo "Records found with the name: $name"
+            echo "$result"
+        fi
+    else
+        echo "Error: Address Book does not exist."
+    fi
+}
+
+# Function to display the menu options
+menu() {
+    echo "**************"
+    echo "* 1. Create   * "
+    echo "* 2. Display  * "
+    echo "* 3. Insert   * "
+    echo "* 4. Delete   * "
+    echo "* 5. Modify   * "
+    echo "* 6. Search   * "
+    echo "* 7. Exit     *"
+    echo "**************"
+}
+
+# Infinite loop to keep the program running until the user chooses to exit
+while true; do
+    menu
+    echo "Enter your choice: "
+    read choice
+    echo
+    # Validate user's choice is a numeric value between 1 and 7
+    if ! [[ "$choice" =~ ^[1-7]$ ]]; then
+        echo "Invalid Choice. Please enter a numeric value between 1 and 7."
+        continue
+    fi
+    # Process the user's choice using a case statement
+    case $choice in
+        1) create ;; # Call the create function
+        2) display ;; # Call the display function
+        3) insert ;; # Call the insert function
+        4) delete ;; # Call the delete function
+        5) modify ;; # Call the modify function
+        6) search_by_name ;; # Call the search_by_name function
+        7) exit 0 ;;
+    esac
+    echo
+done

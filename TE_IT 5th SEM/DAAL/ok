@@ -1,0 +1,85 @@
+package PackageDemo;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
+
+public class IPAddressCount {
+    public static void main(String[] args) throws Exception {
+        Configuration c = new Configuration();
+        String[] files = new GenericOptionsParser(c, args).getRemainingArgs();
+        Path input = new Path(files[0]);
+        Path output = new Path(files[1]);
+        Job j = new Job(c, "ipaddresscount");
+        j.setJarByClass(IPAddressCount.class);
+        j.setMapperClass(MapForIPAddressCount.class);
+        j.setReducerClass(ReduceForIPAddressCount.class);
+        j.setOutputKeyClass(Text.class);
+        j.setOutputValueClass(IntWritable.class);
+        FileInputFormat.addInputPath(j, input);
+        FileOutputFormat.setOutputPath(j, output);
+        System.exit(j.waitForCompletion(true) ? 0 : 1);
+    }
+
+    public static class MapForIPAddressCount extends Mapper<LongWritable, Text, Text, IntWritable> {
+        private static final String IP_PATTERN =
+                "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b";
+
+        private final Text outputKey = new Text();
+        private final IntWritable outputValue = new IntWritable(1);
+
+        public void map(LongWritable key, Text value, Context con) throws IOException, InterruptedException {
+            String line = value.toString();
+            String[] words = line.split(",");
+
+            for (String word : words) {
+                String ipAddress = extractIPAddress(word);
+                if (ipAddress != null) {
+                    outputKey.set(ipAddress);
+                    con.write(outputKey, outputValue);
+                }
+            }
+        }
+
+        private String extractIPAddress(String input) {
+            Pattern pattern = Pattern.compile(IP_PATTERN);
+            Matcher matcher = pattern.matcher(input);
+            if (matcher.find()) {
+                return matcher.group();
+            }
+            return null;
+        }
+    }
+
+    public static class ReduceForIPAddressCount extends Reducer<Text, IntWritable, Text, IntWritable> {
+        private final IntWritable result = new IntWritable();
+
+        public void reduce(Text word, Iterable<IntWritable> values, Context con)
+                throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable value : values) {
+                sum += value.get();ok
+            }
+            result.set(sum);
+            con.write(word, result);
+        }
+    }
+}
+
+
+192.168.1.1, 192.168.1.2, 192.168.1.1
+192.168.1.2, 192.168.1.3
+192.168.1.1, 192.168.1.3, 192.168.1.1, 192.168.1.2
+ok

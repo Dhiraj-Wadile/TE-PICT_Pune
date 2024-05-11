@@ -1,0 +1,40 @@
+mount -t vboxsf folder_name(givenin shared folders opt) (path)
+mount -t vboxsf (windows vale file ka name jo shared folder mai naam diya hai ) /home/cloudera/Desktop/Folder 
+
+
+txt 
+
+Hadoop Commands :
+
+hadoop fs -put Desktop/filename.txt filename.txt
+
+
+create jar file:
+hadoop jar (jarfilename).jar (packagename).(classname) filename.txt (dir1/2/3/4/...)
+
+
+To display the output:
+hadoop fs -cat dirname/part-r-00000
+
+
+for CSV
+
+[training@localhost ~]$ hadoop fs -put wordcountFile wordCountFile
+
+hadoop jar MRProgramsDemo.jar PackageDemo.WordCount wordCountFile MRDir1
+
+hadoop fs -ls MRDir1
+
+hadoop fs -cat MRDir1/part-r-00000
+
+
+
+Generate jar file MRPrograms_logFile.jar
+
+1) hadoop fs -put logTime22.csv logTime22
+
+2) hadoop jar MRPrograms_logFile.jar PackageDemo.Max_Logged logTime22 MRDir1
+
+3) hadoop fs -ls MRDir1
+
+4) hadoop fs -cat MRDir1/part-r-000000
