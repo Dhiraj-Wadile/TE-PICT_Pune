@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Facebook.com</title>
+    <link href="assests/bootstrap.min.css" rel="stylesheet"
+        >
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #eaeaea;
+        }
+
+        header {
+            background: #001a6e;
+            color: white;
+            height: 10rem;
+        }
+
+        header .head {
+            display: flex;
+            height: 100%;
+            align-items: center;
+        }
+
+        header .head h1 {
+            font-size: 4rem;
+            font-weight: 900;
+        }
+
+        header input[type=text] {
+            height: 25px;
+            width: 250px;
+        }
+
+        .headerForm {
+            display: flex;
+            align-items: center;
+        }
+
+        .headerForm span {
+            margin: 10px;
+        }
+
+        .headerForm p {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        .headerForm a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 90px;
+        }
+
+        .panel1 h1 {
+            color: #001a6e;
+            font-size: 2.2rem;
+        }
+
+        .panel1 h3 {
+            color: #0f0968;
+        }
+
+        .panel1 img {
+            mix-blend-mode: multiply;
+        }
+
+        .lightBackground {
+            background-color: #f5f8ff;
+        }
+
+        .panel2 h1 {
+            font-size: 4rem;
+        }
+
+        .panel2 {
+            margin-left: 40px;
+        }
+
+        .panel2 h1,
+        .panel2 h4 {
+            color: #001a6e;
+            font-weight: normal;
+        }
+
+        .panel2 input[type=text],
+        .panel2 input[type=date] {
+            padding: 12px;
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            width: 460px;
+        }
+
+        .panel2 input[type=date] {
+            width: 200px;
+        }
+
+        .fname,
+        .lname {
+            width: 230px !important;
+        }
+
+        .panel2 span,
+        .panel2 p,
+        .panel2 a {
+            font-size: 1.5rem;
+            color: #001a6e;
+            margin: 0;
+            text-decoration: none;
+        }
+
+        .panel2 button {
+            background-color: #119911;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container h-100">
+            <div class="head">
+                <h1 class="col">facebook</h1>
+                <div class="col headerForm">
+                    <span>
+                        <p>Email or Username</p>
+                        <input type="text" name="" placeholder="Email" id=""><br>
+                        <input type="checkbox"> Keep me logged in
+                    </span>
+                    <span>
+                        <p>Password</p>
+                        <input type="text" name="" placeholder="Password" id=""><br>
+                        <a href="#">Forget my password!</a>
+                    </span>
+                    <span class="col">
+                        <button class="login-btn">login</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            <div class="col panel1 mt-4">
+                <h1>Facebook is useless without friends.</h1>
+                <h1>Make More Friends.</h1>
+                <div class="lightBackground p-5 mt-4">
+                    <h3>
+                        Facebook helps you connect and share <br>
+                        with the people in your life.
+                    </h3>
+                    <br>
+                    <img src="./image.png" alt="facebook-image">
+                </div>
+            </div>
+            <div class="col panel2 mt-4">
+                <h1>Create an Account</h1>
+                <h4>It's free and always will be.</h4>
+
+                <div class="pt-4">
+                    <input type="text" placeholder="Firstname" class="fname"><input type="text" placeholder="Lastname"
+                        class="lname">
+                    <br>
+                    <input type="text" placeholder="Email">
+                    <br>
+                    <input type="text" placeholder="Re-enter email">
+                    <br>
+                    <input type="text" placeholder="Password">
+                    <br>
+                    <input type="date">
+                    <br><br>
+                    <input type="radio" name="gender"> <span>Male</span> &nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="gender"> <span>Female</span>
+                    <br><br>
+                    <p>
+                        By clicking create new account, you agree to <br>
+                        our Terms.
+                    </p>
+                    <button>Signup</button>
+                </div>
+                <hr>
+                <a href="">Create a page for you.</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

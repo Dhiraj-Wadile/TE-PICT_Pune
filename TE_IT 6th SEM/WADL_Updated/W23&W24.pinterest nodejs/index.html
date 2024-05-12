@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+       /* Custom CSS */
+
+/* Navbar */
+.nav {
+    background-color: #343a40; /* Dark grey background */
+    color: white;
+}
+
+/* Title */
+.nav h1 {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
+
+/* Dropdown */
+.drpdwn {
+    background-color: #343a40; /* Dark grey background */
+    color: white;
+    border: none;
+}
+
+/* Signup Button */
+.signup {
+    background-color: #f35a5a; /* Red */
+    border: none;
+}
+
+/* Login Button */
+.login {
+    background-color: #6c757d; /* Grey */
+    border: none;
+    margin-right: 10px;
+}
+
+/* Explore Section Title */
+h1 {
+    color: #343a40; /* Dark grey */
+}
+
+/* Cards Container */
+/* Card Container */
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Gap between cards */
+    justify-content: center;
+}
+
+/* Card Styling */
+.card {
+    background-color: #f8f9fa; /* Light grey */
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: transform 0.3s ease;
+    width: 4000px; /* Fixed width */
+    height: 100%; /* Full height */
+    margin: 0 auto 20px; /* Center horizontally and add bottom margin */
+}
+#scrollDownBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    left: 760px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid #000; /* Change color as needed */
+}
+
+.arrow-down:hover {
+    border-top-color: #01070e; /* Change color on hover */
+    transition: border-top-color 0.3s ease; /* Add transition effect */
+}
+
+
+
+
+.card:hover {
+    transform: translateY(-5px); /* Lift on hover */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Set image height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 10px 10px 0 0; /* Rounded corners for top */
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #343a40; /* Dark grey */
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d; /* Grey */
+}
+
+/* Scroll Down Button */
+
+
+nav{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    position:relative;
+    top: 0;
+    background: #fff;
+    left: 0;
+    right: 0;
+}
+
+nav a{
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+nav a.active{
+    background: #000;
+    color: #fff;
+}
+
+nav a img{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.p-icon {
+    font-size: 24px; /* Adjust size as needed */
+    color: #f2d881; /* Pinterest logo color */
+    font-weight: bold; /* Make it bold */
+    font-family: Arial, sans-serif; /* Choose a suitable font */
+    display: inline-block; /* Ensures the circle border is applied correctly */
+    width: 40px; /* Set width to match height for a perfect circle */
+    height: 40px; /* Set height */
+    text-align: center; /* Center the "P" horizontally */
+    line-height: 40px; /* Center the "P" vertically */
+    border-radius: 50%; /* Create a circular border */
+    border: 2px solid #91eee3; /* Border color */
+}
+.logo-box {
+    display: none;
+    position: absolute;
+    top: 40px; /* Adjust the position as needed */
+    left: 0;
+    background-color: #fff; /* Background color of the box */
+    border: 1px solid #ccc; /* Border color */
+    padding: 10px; /* Padding around the content */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.logo-box p {
+    margin: 0;
+}
+.logo-container {
+    position: relative;
+    display: inline-block; /* Ensure the container takes up only the necessary space */
+}
+
+.logo-box {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position it just below the icon */
+    right: 0; /* Align it to the right */
+    background-color: #fff; /* Background color of the box */
+    border: 1px solid #ccc; /* Border color */
+    padding: 10px; /* Padding around the content */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.logo-box {
+    width: 150px;
+    height: 100px;
+    margin-right: 600px;
+    margin-left: -60px; /* Shifting left by 50 pixels */
+}
+
+.logo-box p {
+    margin: 0;
+}
+
+    </style>
+</head>
+<body>
+    
+     <nav>
+        <a class="logo" href="#"><i class="fab fa-pinterest"></i></a>
+        <a href="/" class="active">Home</a>
+        <a href="https://www.pinterest.com/#save" target="_blank">Explore</a>
+        <a href="https://www.pinterest.com/">Create</a>    
+        <a href="https://www.google.com">Search</a>
+        <div class="container-fluid nav d-flex justify-content-between p-4 bg-secondary-subtle">
+        <div class="d-flex">
+            <h1 style="color: rgb(243, 90, 90);">Pinterest</h1>
+
+            <select name="explore" id="explore" class="drpdwn rounded ms-3">
+                <option value="">Select Date</option>
+                <!-- Add options for selecting dates -->
+                <option value="2024-05-01">May 1, 2024</option>
+                <option value="2024-04-30">April 30, 2024</option>
+                <option value="2024-04-29">April 29, 2024</option>
+                <option value="2024-04-28">April 28, 2024</option>
+            </select>
+            
+        </div>
+
+    </div>
+        <a href="#" class="icon"><i class="fas fa-bell"></i></a>
+        <a href="#" class="icon"><i class="fas fa-comment-dots"></i></a>
+        <a href="#" class="logo-container">
+            <span class="p-icon">P</span>
+            <div class="logo-box" id="logoBox" style="width: 150px;height: 300px;margin-right: 500px;">
+                <p>Your name</p>
+                <p>Your email id</p>
+                <p>Sign in time</p>
+            </div>
+        </a>
+    </nav>
+
+    <h1 class="text-center my-4">Explore the best of Pinterest</h1>
+    
+    <div class="content p-5" id="cardsContainer"> 
+        <!-- Cards will be dynamically generated here -->
+    </div>
+
+  <div id="scrollDownBtn" class="fixed-bottom mb-4">
+    <div class="arrow-down"></div>
+</div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const exploreSelect = document.getElementById('explore');
+            const cardsContainer = document.getElementById('cardsContainer');
+            const scrollDownBtn = document.getElementById('scrollDownBtn');
+
+            // Fetch card data from backend
+            fetch('/cards')
+            .then(response => response.json())
+            .then(data => {
+                // Function to filter cards by date
+                function filterCardsByDate(date) {
+                    // Clear existing cards
+                    cardsContainer.innerHTML = '';
+
+                    // Filter cards based on selected date
+                    const filteredCards = data.filter(card => card.date === date);
+
+                    // Loop through filtered cards and create HTML for each card
+                    filteredCards.forEach(card => {
+                        const cardHtml = `
+                            <div class="card mb-3" style="width: 18rem;">
+                                <img src="https://imgs.search.brave.com/Xw3NFxb1mDLhRHiFwZ6y4pqYJMU3dRW84i1nhdwXG8Q/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuY3RmYXNzZXRz/Lm5ldC9ocmx0eDEy/cGw4aHEvNTU5Nnoy/QkNSOUttVDFLZVJC/ck9RYS80MDcwZmQ0/ZTJmMWExM2Y3MWMy/YzQ2YWZlYjE4ZTQx/Yy9zaHV0dGVyc3Rv/Y2tfNDUxMDc3MDQz/LWhlcm8xLmpwZz9m/aXQ9ZmlsbCZ3PTYw/MCZoPTEyMDA" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">${card.date}</h5>
+                                    <p class="card-text">${card.description}</p>
+                                </div>
+                            </div>
+                        `;
+                        cardsContainer.innerHTML += cardHtml;
+                    });
+                }
+
+                // Event listener for select change
+                exploreSelect.addEventListener('change', function () {
+                    const selectedDate = this.value;
+                    if (selectedDate) {
+                        filterCardsByDate(selectedDate);
+                    } else {
+                        // If no date is selected, display all cards
+                        cardsContainer.innerHTML = '';
+                        data.forEach(card => {
+                            const cardHtml = `
+                                <div class="card mb-3" style="width: 18rem;">
+                                    <img src="https://th.bing.com/th/id/R.f75285ea27989c7767968416052c8077?rik=b%2bFwJcfx4mxrSQ&riu=http%3a%2f%2fwallpapercave.com%2fwp%2fWntC8nn.jpg&ehk=H205XB8dt3wBPpFcL9OarVBO4s2WddV35x5H7DlXlfs%3d&risl=&pid=ImgRaw&r=0" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${card.date}</h5>
+                                        <p class="card-text">${card.description}</p>
+                                    </div>
+                                </div>
+                            `;
+                            cardsContainer.innerHTML += cardHtml;
+                        });
+                    }
+                });
+
+                // Event listener for scroll down button
+                scrollDownBtn.addEventListener('click', function () {
+                    window.scrollBy(0, 500); // Scroll down by 500px
+                });
+            })
+            .catch(error => console.error('Error fetching card data:', error));
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+    const logo = document.querySelector('.p-icon');
+    const logoBox = document.getElementById('logoBox');
+
+    logo.addEventListener('mouseenter', function () {
+        logoBox.style.display = 'block';
+    });
+
+    logo.addEventListener('mouseleave', function () {
+        logoBox.style.display = 'none';
+    });
+});
+
+    </script>
+</body>
+</html>

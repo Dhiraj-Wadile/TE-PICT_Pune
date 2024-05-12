@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statement 10</title>
+    <style>
+        body {
+            background-color: #f5f5dc; /* Cream color */
+        }
+
+        th {
+            text-align: center;
+            font-size: 1.5rem;
+            background-color: #ffff0088;
+            color: red;
+        }
+
+        td {
+            background-color: #60b8ff88;
+        }
+
+        button {
+            padding: .5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <form>
+            <table border="2px">
+                <tr>
+                    <th colspan="2">User Form</th>
+                </tr>
+
+                <tr>
+                    <td>Enter Name</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>Enter Password</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>Enter Address</td>
+                    <td><textarea rows="4"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Select Games</td>
+                    <td>
+                        <input type="checkbox" name="game"> Hocky <br>
+                        <input type="checkbox" name="game"> Football <br>
+                        <input type="checkbox" name="game"> Badminton <br>
+                        <input type="checkbox" name="game"> Cricket <br>
+                        <input type="checkbox" name="game"> Volleyball <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>
+                        <input type="radio" name="game"> Male
+                        <input type="radio" name="game"> Female
+                    </td>
+                </tr>
+                <tr>
+                    <td>Select ur age</td>
+                    <td>
+                        <select name="select" style="width:100px">
+                            <option selected value="select">Select</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <input type="file" name="file">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <button onclick="redirectToFacebook()">Click Me</button>
+                        <button type="reset">Reset</button>
+                        <button type="submit">Submit Form</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+
+    <script>
+        function redirectToFacebook() {
+            window.location.href = "facebook.html";
+        }
+    </script>
+</body>
+
+</html>

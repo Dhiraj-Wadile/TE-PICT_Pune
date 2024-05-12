@@ -1,0 +1,158 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  padding-left: 280px;
+    padding-right: 300px;
+
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h2 {
+  margin-top: 30px;
+}
+/* Add this CSS code to your existing styles.css file or in a <style> tag within your HTML */
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Table Header */
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+/* Table Body */
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect */
+tr:hover {
+  background-color: #ddd;
+}
+
+
+form {
+  margin-bottom: 20px;
+  padding-right: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"],
+button {
+  padding: 10px 20px;
+  background-color: #3c6e71;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button:hover {
+  background-color: #01497c;
+}
+
+#songList,
+#songsByDirectorList,
+#songsByDirectorSingerList,
+#songsBySingerFilmList {
+  margin-top: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+#songTable {
+  margin-top: 20px;
+}
+/* Add this CSS code to your existing styles.css file or in a <style> tag within your HTML */
+
+/* Alert Prompt */
+.alert {
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+/* Success Alert */
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+/* Error Alert */
+.alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+/* Info Alert */
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+/* Warning Alert */
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+/* Apply styles to the text inside the alert box */
+.alert-message {
+  font-size: 16px;
+  color: white;
+  background-color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+
+
+/* Responsive styling */
+@media screen and (max-width: 600px) {
+  input[type="text"] {
+    width: 100%;
+  }
+}
+

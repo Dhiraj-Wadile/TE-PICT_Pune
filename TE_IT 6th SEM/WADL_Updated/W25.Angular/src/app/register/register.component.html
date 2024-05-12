@@ -1,0 +1,46 @@
+<div class="registration-container">
+  <div class="container" style="text-align: center; margin-top: 50px;">
+    <p style="font-size: 20px;">Welcome to Registration Page!</p>
+   
+    <form (ngSubmit)="registerUser()" #registrationForm="ngForm" style="margin-bottom: 20px;">
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username" [(ngModel)]="username" #usernameInput="ngModel" placeholder="Username" style="margin-bottom: 10px; padding: 5px;" required><br>
+      <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" style="color: red; margin-bottom: 10px;">
+        <div *ngIf="usernameInput.errors?.['required']">Username is required</div>
+      </div>
+      
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" [(ngModel)]="email" #emailInput="ngModel" placeholder="Email" style="margin-bottom: 10px; padding: 5px;" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"><br>
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" style="color: red; margin-bottom: 10px;">
+        <div *ngIf="emailInput.errors?.['required']">Email is required</div>
+        <div *ngIf="emailInput.errors?.['pattern']">Please enter a valid email address</div>
+      </div>
+      
+      <label for="phone">Phone:</label><br>
+      <input type="text" id="phone" name="phone" [(ngModel)]="phone" #phoneInput="ngModel" placeholder="Phone" style="margin-bottom: 10px; padding: 5px;" pattern="[0-9]{10}" required><br>
+      <div *ngIf="phoneInput.invalid && (phoneInput.dirty || phoneInput.touched)" style="color: red; margin-bottom: 10px;">
+        <div *ngIf="phoneInput.errors?.['required']">Phone number is required</div>
+        <div *ngIf="phoneInput.errors?.['pattern']">Please enter a 10-digit phone number</div>
+      </div>
+      
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" [(ngModel)]="password" #passwordInput="ngModel" placeholder="Password" style="margin-bottom: 10px; padding: 5px;" pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z0-9]).{6,}$" required><br>
+      <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" style="color: red; margin-bottom: 10px;">
+        <div *ngIf="passwordInput.errors?.['required']">Password is required</div>
+        <div *ngIf="passwordInput.errors?.['pattern']">Password must contain at least one capital letter, one symbol, and be at least 6 characters long</div>
+      </div>
+      
+      <label for="course">Course:</label><br>
+      <select id="course" name="course" [(ngModel)]="course" #courseInput="ngModel" style="margin-bottom: 10px; padding: 5px;">
+        <option value="">Select Course</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Computer Engineering">Computer Engineering</option>
+        <option value="ENTC">ENTC</option>
+      </select><br>
+      
+      <button type="submit" [disabled]="registrationForm.invalid" style="background-color: #001219; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;">Register</button>
+      <a routerLink="/login" style="display: block; margin-bottom: 20px; text-decoration: none; color: blue;">Already have an account? Login here</a>
+    </form>
+  </div>
+</div>
+ 

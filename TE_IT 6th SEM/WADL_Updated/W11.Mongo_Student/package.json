@@ -1,0 +1,19 @@
+{
+  "name": "marks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2",
+    "nodemon": "^3.1.0"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}

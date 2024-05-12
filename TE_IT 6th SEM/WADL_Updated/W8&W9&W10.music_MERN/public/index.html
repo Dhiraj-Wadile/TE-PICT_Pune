@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Music Management System</title>
+  <style>
+    .container {
+      background-color: #ebebeb;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  <h1>Music Management System</h1>
+  
+  <!-- Form to add a new song -->
+  <h2>Add a New Song</h2>
+  <form id="addSongForm">
+  <label for="songName">Song Name:</label>
+  <input type="text" id="songName" name="songName" required><br><br>
+  <label for="film">Film:</label>
+  <input type="text" id="film" name="film" required><br><br>
+  <label for="musicDirector">Music Director:</label>
+  <input type="text" id="musicDirector" name="musicDirector" required><br><br>
+  <label for="singer">Singer:</label>
+  <input type="text" id="singer" name="singer" required><br><br>
+  <label for="actor">Actor:</label>
+  <input type="text" id="actor" name="actor" required><br><br>
+  <label for="actress">Actress:</label>
+  <input type="text" id="actress" name="actress" required><br><br>
+  <button type="submit">Add Song</button>
+</form>
+
+
+  <!-- Display count and list all songs -->
+  <h2>Display Count and List All Songs</h2>
+  <button id="displaySongsBtn">Display Songs</button>
+  <div id="songList"></div>
+
+  <!-- Delete a song -->
+  <h2>Delete a Song</h2>
+  <form id="deleteSongForm">
+    <label for="songToDelete">Song Name to Delete:</label>
+    <input type="text" id="songToDelete" name="songToDelete" required><br><br>
+    <button type="submit">Delete Song</button>
+  </form>
+
+  <!-- List songs by director -->
+  <h2>List Songs by Director</h2>
+  <form id="songsByDirectorForm">
+    <label for="directorName">Director Name:</label>
+    <input type="text" id="directorName" name="directorName" required><br><br>
+    <button type="submit">List Songs</button>
+  </form>
+  <div id="songsByDirectorList"></div>
+
+  <!-- List songs by director and singer -->
+  <h2>List Songs by Director and Singer</h2>
+  <form id="songsByDirectorSingerForm">
+    <label for="directorNameSinger">Director Name:</label>
+    <input type="text" id="directorNameSinger" name="directorNameSinger" required><br><br>
+    <label for="singerName">Singer Name:</label>
+    <input type="text" id="singerName" name="singerName" required><br><br>
+    <button type="submit">List Songs</button>
+  </form>
+  <div id="songsByDirectorSingerList"></div>
+
+  <!-- List songs by singer and film -->
+  <h2>List Songs by Singer and Film</h2>
+  <form id="songsBySingerFilmForm">
+    <label for="singerNameFilm">Singer Name:</label>
+    <input type="text" id="singerNameFilm" name="singerNameFilm" required><br><br>
+    <label for="filmName">Film Name:</label>
+    <input type="text" id="filmName" name="filmName" required><br><br>
+    <button type="submit">List Songs</button>
+  </form>
+  <div id="songsBySingerFilmList"></div>
+
+  <!-- Display all songs in a table -->
+  <h2>Display All Songs in Table</h2>
+  <button id="displaySongsTableBtn">Display Songs Table</button>
+  <div id="songTable"></div>
+  </div>
+
+  <!-- JavaScript code -->
+  <script>
+    // Function to fetch songs and display in a list
+    async function displaySongsList() {
+      const response = await fetch('/displayCountAndDocuments');
+      const data = await response.json();
+      const songs = data.songs;
+
+      let songListHTML = '<h3>Total Songs: ' + data['total count'] + '</h3><ul>';
+      songListHTML += '<li><strong>Song Name</strong> - <strong>Film Name</strong></li>'; // Header for song list
+      songs.forEach(song => {
+        songListHTML += '<li>' + song.Songname + ' - ' + song.Film + '</li>';
+      });
+      songListHTML += '</ul>';
+      document.getElementById('songList').innerHTML = songListHTML;
+    }
+
+    // Function to delete a song
+    async function deleteSong() {
+      const songToDelete = document.getElementById('songToDelete').value;
+
+      const response = await fetch('/delete/' + songToDelete, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+      alert(data.message);
+    }
+
+    // Function to list songs by director
+    async function listSongsByDirector() {
+      const directorName = document.getElementById('directorName').value;
+
+      const response = await fetch('/getSongsOfDirector/' + directorName);
+      const songs = await response.json();
+
+      let songListHTML = '<h3>Songs by ' + directorName + '</h3><ul>';
+      songs.forEach(song => {
+        songListHTML += '<li>' + song.Songname + '</li>';
+      });
+      songListHTML += '</ul>';
+      document.getElementById('songsByDirectorList').innerHTML = songListHTML;
+    }
+
+    // Function to list songs by director and singer
+    async function listSongsByDirectorSinger() {
+      const directorName = document.getElementById('directorNameSinger').value;
+      const singerName = document.getElementById('singerName').value;
+
+      const response = await fetch('/getSongsOfDirectorAndSinger/' + directorName + '/' + singerName);
+      const songs = await response.json();
+
+      let songListHTML = '<h3>Songs by ' + directorName + ' sung by ' + singerName + '</h3><ul>';
+      songs.forEach(song => {
+        songListHTML += '<li>' + song.Songname + '</li>';
+      });
+      songListHTML += '</ul>';
+      document.getElementById('songsByDirectorSingerList').innerHTML = songListHTML;
+    }
+
+    // Function to list songs by singer and film
+    async function listSongsBySingerFilm() {
+      const singerName = document.getElementById('singerNameFilm').value;
+      const filmName = document.getElementById('filmName').value;
+
+      const response = await fetch('/getSongsOfSingerAndFilm/' + singerName + '/' + filmName);
+      const songs = await response.json();
+
+      let songListHTML = '<h3>Songs by ' + singerName + ' in ' + filmName + '</h3><ul>';
+      songs.forEach(song => {
+        songListHTML += '<li>' + song.Songname + '</li>';
+      });
+      songListHTML += '</ul>';
+      document.getElementById('songsBySingerFilmList').innerHTML = songListHTML;
+    }
+
+    // Function to display all songs in a table
+    async function displaySongsTable() {
+      const response = await fetch('/displayAllSongsInTable');
+      const htmlTable = await response.text();
+      document.getElementById('songTable').innerHTML = htmlTable;
+    }
+
+    // Event listeners
+    document.getElementById('addSongForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const songName = document.getElementById('songName').value;
+      const film = document.getElementById('film').value;
+      const musicDirector = document.getElementById('musicDirector').value;
+      const singer = document.getElementById('singer').value;
+      const actor = document.getElementById('actor').value;
+    const actress = document.getElementById('actress').value;
+
+      const response = await fetch('/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ Songname: songName, Film: film, Music_director: musicDirector, singer: singer ,Actor:actor,Actress:actress})
+      });
+
+      const data = await response.json();
+        document.getElementById('songName').value = '';
+    document.getElementById('film').value = '';
+    document.getElementById('musicDirector').value = '';
+    document.getElementById('singer').value = '';
+    document.getElementById('actor').value = '';
+    document.getElementById('actress').value = '';
+      alert(data.message);
+    });
+
+    document.getElementById('displaySongsBtn').addEventListener('click', displaySongsList);
+
+    document.getElementById('deleteSongForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      await deleteSong();
+      displaySongsList();
+    });
+
+    document.getElementById('songsByDirectorForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      await listSongsByDirector();
+    });
+
+    document.getElementById('songsByDirectorSingerForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      await listSongsByDirectorSinger();
+    });
+
+    document.getElementById('songsBySingerFilmForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      await listSongsBySingerFilm();
+    });
+
+    document.getElementById('displaySongsTableBtn').addEventListener('click', displaySongsTable);
+  </script>
+</body>
+</html>

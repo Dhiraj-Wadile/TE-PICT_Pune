@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statement 6</title>
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        /* Form styles */
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* Basic styling for tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Improved styling for submit button */
+        button {
+            background-color: #000814;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Example and instructions */
+        .inline-example {
+            background-color: lightblue;
+            color: navy;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        /* Improved styling for input boxes */
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+            font-size: 18px;
+        }
+
+        .input-description {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .input-description:hover .description {
+            visibility: visible;
+        }
+
+        .description {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+            font-size: 16px;
+        }
+
+        .description::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        /* Rules text styles */
+        .rules-text {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 600px; /* Adjust as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Example and instructions -->
+        <div class="inline-example">
+            Example input: <strong>3#3#3</strong> (Rows#Columns#Starting value)
+        </div>
+
+        <form id="inputForm">
+            <div class="input-description">
+                Input1: <input type="text" name="input1" value="">
+                <span class="description">Format: Rows#Columns#Starting value</span>
+            </div>
+            <br><br>
+            <div class="input-description">
+                Input2: <input type="text" name="input2" value="">
+                <span class="description">Format: Rows#Columns#Starting value</span>
+            </div>
+            <hr>
+            <button>Submit</button>
+            <!-- Rules text -->
+            <div class="rules-text">
+                <p>Rule 1: If the number of rows and columns in both inputs is the same, the third table will show the last number present in the input value.</p>
+                <br>
+                <p>Rule 2: If the first cell value of the first table is equal to the first cell value of the second table, the third table will show the same number. Otherwise, it will show the multiplication of both numbers.</p>
+                <p>In the third table, if any cell value repeats, it will have the same background color; otherwise, it will have a new one.</p>
+            </div>
+        </form>
+        <hr>
+        <!-- Tables -->
+        <table id="table1"></table>
+        <hr>
+        <table id="table2"></table>
+        <hr>
+        <table id="table3"></table>
+    </div>
+
+    <script>
+        const form = document.forms.inputForm;
+        form.addEventListener("submit", formSubmit);
+
+        function formSubmit(event) {
+            event.preventDefault();
+
+            let input1 = form.input1.value;
+            let input2 = form.input2.value;
+
+            input1 = input1.split("#");
+            input2 = input2.split("#");
+
+            let table1 = createTable(input1);
+            let table2 = createTable(input2);
+
+            let table3 = multiply(table1, table2);
+
+            displayTable(table1, "table1");
+            displayTable(table2, "table2");
+            displayTable(table3, "table3");
+        }
+
+        function createTable(input) {
+            let table = [];
+            for (let row = 0; row < input[0]; row++) {
+                table.push([]);
+            }
+
+            let startHead = input[2];
+            for (let col = 0; col < input[1]; col++) {
+                let currentHead = startHead++;
+                table[0][col] = currentHead;
+                for (let row = 1; row < input[0]; row++) {
+                    table[row][col] = (row + 1) * currentHead;
+                }
+            }
+
+            return table;
+        }
+
+        function multiply(table1, table2) {
+            let table = [];
+            for (let i = 0; i < table1.length; i++) {
+                let row = [];
+                for (let j = 0; j < table1[0].length; j++) {
+                    if (table1[i][j] != table2[i][j]) {
+                        row.push(table1[i][j] * table2[i][j]);
+                    } else {
+                        row.push(table1[i][j]);
+                    }
+                }
+                table.push(row);
+            }
+
+            return table;
+        }
+
+        function displayTable(table, id) {
+            const tableOutput = document.getElementById(id);
+
+            let html = "";
+            for (let i = 0; i < table.length; i++) {
+                html += "<tr>";
+                for (let j = 0; j < table[0].length; j++) {
+                    html += "<td>";
+                    html += table[i][j];
+                    html += "</td>";
+                }
+                html += "</tr>";
+            }
+
+            tableOutput.innerHTML = html;
+        }
+
+    </script>
+</body>
+
+</html>

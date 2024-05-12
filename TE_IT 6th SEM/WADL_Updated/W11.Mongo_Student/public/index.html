@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Student Management System</title>
+  <style>
+    .container {
+      background-color: #ebebeb;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Student Management System</h1>
+
+    <!-- Form to add a new student -->
+    <h2>Add a New Student</h2>
+    <form id="addStudentForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br><br>
+      <label for="rollNumber">Roll Number:</label>
+      <input type="text" id="rollNumber" name="rollNumber" required><br><br>
+      <label for="cnsMarks">CNS Marks:</label>
+      <input type="number" id="cnsMarks" name="cnsMarks" required><br><br>
+      <label for="dbMarks">DB Marks:</label>
+      <input type="number" id="dbMarks" name="dbMarks" required><br><br>
+      <label for="ccMarks">CC Marks:</label>
+      <input type="number" id="ccMarks" name="ccMarks" required><br><br>
+      <label for="paMarks">PA Marks:</label>
+      <input type="number" id="paMarks" name="paMarks" required><br><br>
+      <button type="submit">Add Student</button>
+    </form>
+
+    <!-- Display count and list all students -->
+    <h2>Display Count and List All Students</h2>
+    <button id="displayStudentsBtn">Display Students</button>
+    <div id="studentList"></div>
+
+    <!-- Delete a student -->
+    <h2>Delete a Student</h2>
+    <form id="deleteStudentForm">
+      <label for="studentToDelete">Student Roll Number to Delete:</label>
+      <input type="text" id="studentToDelete" name="studentToDelete" required><br><br>
+      <button type="submit">Delete Student</button>
+    </form>
+
+    <!-- List students by CNS marks -->
+    <h2>List Students by CNS Marks</h2>
+    <form id="studentsByCNSMarksForm">
+      <label for="cnsMarksFilter">Minimum CNS Marks:</label>
+      <input type="number" id="cnsMarksFilter" name="cnsMarksFilter" required><br><br>
+      <button type="submit">List Students</button>
+    </form>
+    <div id="studentsByCNSMarksList"></div>
+
+    <!-- List students by DB marks -->
+    <h2>List Students by DB Marks</h2>
+    <form id="studentsByDBMarksForm">
+      <label for="dbMarksFilter">Minimum DB Marks:</label>
+      <input type="number" id="dbMarksFilter" name="dbMarksFilter" required><br><br>
+      <button type="submit">List Students</button>
+    </form>
+    <div id="studentsByDBMarksList"></div>
+
+    <!-- Display all students in a table -->
+    <h2>Display All Students in Table</h2>
+    <button id="displayStudentsTableBtn">Display Students Table</button>
+    <div id="studentTable"></div>
+
+    <h2>Update Marks for a Student</h2>
+    <form id="updateMarksForm">
+      <label for="rollNumberToUpdate">Roll Number:</label>
+      <input type="text" id="rollNumberToUpdate" name="rollNumberToUpdate" required><br><br>
+      <button type="submit">Update Marks</button>
+    </form>
+
+    <!-- List names of students who got more than 25 marks in all subjects -->
+<h2>List Names of Students with More than 25 Marks in All Subjects</h2>
+<button id="studentsAbove25MarksBtn">List Students</button>
+<div id="studentsAbove25MarksList"></div>
+
+  </div>
+
+  <!-- JavaScript code -->
+  <script>
+    // Function to fetch students and display in a list
+async function displayStudentsList() {
+  const response = await fetch('/displayStudents');
+  const data = await response.json();
+  const students = data.students;
+
+  let studentListHTML = '<h3>Total Students: ' + data['total count'] + '</h3><ul>';
+  studentListHTML += '<li><strong>Name</strong> - <strong>Roll Number</strong></li>'; // Header for student list
+  students.forEach(student => {
+    studentListHTML += '<li>' + student.name + ' - ' + student.rollNumber + '</li>';
+  });
+  studentListHTML += '</ul>';
+  document.getElementById('studentList').innerHTML = studentListHTML;
+}
+
+// Function to delete a student
+async function deleteStudent() {
+  const studentToDelete = document.getElementById('studentToDelete').value;
+
+  const response = await fetch('/delete/' + studentToDelete, {
+    method: 'DELETE'
+  });
+
+  const data = await response.json();
+  alert(data.message);
+}
+
+async function listStudentsAbove25Marks() {
+  const response = await fetch('/studentsAbove25Marks');
+  const names = await response.json();
+
+  let namesHTML = '<h3>Students with More than 25 Marks in All Subjects</h3><ul>';
+  names.forEach(name => {
+    namesHTML += '<li>' + name + '</li>';
+  });
+  namesHTML += '</ul>';
+  document.getElementById('studentsAbove25MarksList').innerHTML = namesHTML;
+}
+
+// Function to list students by CNS marks
+async function listStudentsByCNSMarks() {
+  const cnsMarksFilter = document.getElementById('cnsMarksFilter').value;
+
+  const response = await fetch('/getStudentsByCNSMarks/' + cnsMarksFilter);
+  const students = await response.json();
+
+  let studentListHTML = '<h3>Students with CNS Marks >= ' + cnsMarksFilter + '</h3><ul>';
+  students.forEach(student => {
+    studentListHTML += '<li>' + student.name + ' - ' + student.rollNumber + '</li>';
+  });
+  studentListHTML += '</ul>';
+  document.getElementById('studentsByCNSMarksList').innerHTML = studentListHTML;
+}
+
+// Function to list students by DB marks
+async function listStudentsByDBMarks() {
+  const dbMarksFilter = document.getElementById('dbMarksFilter').value;
+
+  const response = await fetch('/getStudentsByDBMarks/' + dbMarksFilter);
+  const students = await response.json();
+
+  let studentListHTML = '<h3>Students with DB Marks >= ' + dbMarksFilter + '</h3><ul>';
+  students.forEach(student => {
+    studentListHTML += '<li>' + student.name + ' - ' + student.rollNumber + '</li>';
+  });
+  studentListHTML += '</ul>';
+  document.getElementById('studentsByDBMarksList').innerHTML = studentListHTML;
+}
+
+// Function to display all students in a table
+async function displayStudentsTable() {
+  const response = await fetch('/displayAllStudentsInTable');
+  const htmlTable = await response.text();
+  document.getElementById('studentTable').innerHTML = htmlTable;
+}
+
+async function updateMarks() {
+  const rollNumberToUpdate = document.getElementById('rollNumberToUpdate').value;
+
+  const response = await fetch('/updateMarks/' + rollNumberToUpdate, {
+    method: 'PUT'
+  });
+
+  const data = await response.json();
+  alert(data.message);
+}
+
+// Event listeners
+document.getElementById('addStudentForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  const name = document.getElementById('name').value;
+  const rollNumber = document.getElementById('rollNumber').value;
+  const cnsMarks = document.getElementById('cnsMarks').value;
+  const dbMarks = document.getElementById('dbMarks').value;
+  const ccMarks = document.getElementById('ccMarks').value;
+  const paMarks = document.getElementById('paMarks').value;
+
+  const response = await fetch('/addStudent', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name, rollNumber, cnsMarks, dbMarks, ccMarks, paMarks })
+  });
+
+  // Clear form fields after submission
+  document.getElementById('name').value = '';
+  document.getElementById('rollNumber').value = '';
+  document.getElementById('cnsMarks').value = '';
+  document.getElementById('dbMarks').value = '';
+  document.getElementById('ccMarks').value = '';
+  document.getElementById('paMarks').value = '';
+
+  const data = await response.json();
+  alert(data.message);
+});
+
+document.getElementById('displayStudentsBtn').addEventListener('click', displayStudentsList);
+
+document.getElementById('deleteStudentForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  await deleteStudent();
+  displayStudentsList();
+});
+
+document.getElementById('studentsByCNSMarksForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  await listStudentsByCNSMarks();
+});
+
+document.getElementById('studentsByDBMarksForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  await listStudentsByDBMarks();
+});
+
+document.getElementById('updateMarksForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  await updateMarks();
+});
+
+document.getElementById('studentsAbove25MarksBtn').addEventListener('click', listStudentsAbove25Marks);
+
+document.getElementById('displayStudentsTableBtn').addEventListener('click', displayStudentsTable);
+
+  </script>
+</body>
+</html>

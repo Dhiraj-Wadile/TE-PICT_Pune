@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap_Vegetables(Statement_8)</title>
+    <link href="bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .links a {
+            display: block;
+            margin-bottom: 5px;
+            text-decoration: none;
+        }
+
+        .image-container {
+            display: flex;
+        }
+        
+        .image-container img {
+            margin-right: 10px; /* Adjust as needed */
+        }
+    </style>
+    <script>
+        function searchRecipes() {
+            var input, filter, links, a, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            links = document.querySelectorAll('.links a');
+            for (i = 0; i < links.length; i++) {
+                a = links[i];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a.style.display = "";
+                } else {
+                    a.style.display = "none";
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <main class="container my-5">
+        <div class="row">
+            <div class="sidebar col-3">
+                <div class="links">
+                    <a href="index.html" style="margin-bottom: 20px;font-size: 20px;font-weight: bold;">Home</a>
+                </div>
+                <h2>Some Favorites</h2>
+                <div class="links">
+                    <a href="celery.html">Celery Root</a>
+                    <a href="spagetti.html">Spaghetti Squash</a>
+                    <a href="killer.html">Killer Mushrooms</a>
+                </div>
+                <input type="text" id="searchInput" class="form-control" style="margin-bottom: 10px;">
+                <button class="btn btn-primary" onclick="searchRecipes()">Search Recipes</button>
+            </div>
+            <div class="col-9">
+                <h1 class="title">Celery Root</h1>
+                <p>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis vero eaque excepturi optio id
+                    aut, ea placeat velit beatae suscipit odit, ipsum magni quae quasi enim culpa debitis voluptas
+                    fugiat perspiciatis praesentium aperiam autem ex tempora eligendi. Aspernatur, impedit nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod similique ut esse maiores
+                    perspiciatis, asperiores aspernatur illum in earum! Quis, hic optio iure labore quam facilis
+                    blanditiis fuga placeat perferendis praesentium provident ducimus. Est sed quam hic in aliquid
+                    doloremque quidem iusto vel itaque. Doloribus dolorem blanditiis non voluptatibus sequi iusto
+                    voluptates nesciunt sed eos vitae! Odio quam nesciunt perspiciatis aliquam consequuntur illo
+                    reiciendis eius adipisci non necessitatibus libero sunt incidunt earum mollitia nulla quos molestiae
+                    facere, a beatae ex dignissimos explicabo. Eaque, aliquam error nesciunt voluptates nostrum rerum
+                    sint alias quo temporibus reprehenderit officiis dolor adipisci inventore ipsum praesentium?
+                </p>
+                <img src="./celery1.jpg" width="33%" alt="one">
+                <img src="./celery2.jpg" width="33%" alt="two">
+                <img src="./celery3.jpeg" width="33%" alt="three" height="180px"> <br>
+                <p>Want to know about veggies related diseases? <a href="./page2.html" >Click here</a></p>
+                
+            </div>
+
+        </div>
+    </main>
+
+    <script src="bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
