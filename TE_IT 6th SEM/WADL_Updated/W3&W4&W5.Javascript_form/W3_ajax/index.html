@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Assignment 1B</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container my-4">
+      <main
+        id="output"
+        class="bg-dark text-light p-4 rounded mb-4 w-100 mx-auto"
+        style="letter-spacing: 2px"
+      ></main>
+      <div class="w-100 mx-auto mb-4 text-end">
+        <button class="btn btn-dark" onclick="fetchData()">Reload</button>
+      </div>
+      <form
+        id="addNumberForm"
+        class="p-4 border shadow-sm w-100 mx-auto needs-validation"
+        novalidate
+      >
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            required
+            pattern="[A-Za-z]+"
+            title="Please enter text only"
+            placeholder="Enter Your First Name"
+          />
+          <div class="invalid-feedback">Please enter a valid first name.</div>
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            required
+            pattern="[A-Za-z]+"
+            title="Please enter text only"
+            placeholder="Enter Your Last Name"
+          />
+          <div class="invalid-feedback">Please enter a valid last name.</div>
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input
+            type="number"
+            class="form-control"
+            name="age"
+            required
+            pattern="\d+"
+            title="Please enter a valid integer"
+            placeholder="Enter Your Age"
+          />
+          <div class="invalid-feedback">Please enter a valid age.</div>
+        </div>
+        <div class="mb-3">
+          <label for="college" class="form-label">College Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="college"
+            required
+            placeholder="Enter Your College Name"
+          />
+          <div class="invalid-feedback">Please enter your college name.</div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            required
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            title="Password must be 8 characters long and include at least one letter and one number."
+            placeholder="Enter Your Password"
+          />
+          <div class="invalid-feedback">Please enter a valid password.</div>
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-select" name="gender" required>
+            <option value="" disabled selected>Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <div class="invalid-feedback">Please select your gender.</div>
+        </div>
+        <div class="mb-3">
+          <label for="birthdate" class="form-label">Birthdate</label>
+          <input
+            type="date"
+            class="form-control"
+            name="birthdate"
+            required
+            max="2004-12-31"
+          />
+          <div class="invalid-feedback">Invalid birthdate. Must be on or after 2004-01-01.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <hr />
+        <small class="small text-success" id="msg"></small>
+      </form>
+    </div>
+    <script>
+      const output = document.getElementById("output");
+    
+      function fetchData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhttp.responseText);
+            let string = `name: ${data.firstName} ${data.lastName} <hr>age: ${data.age}<hr>college: ${data.college}`;
+            output.innerHTML = string;
+    
+            // Show a message on the main page
+            $("#msg").html("Data Reloaded");
+          }
+        };
+        xhttp.open("GET", "http://localhost:3000/", true);
+        xhttp.send();
+      }
+    
+      document.body.onload = () => {
+        fetchData();
+    
+        document.forms.addNumberForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+    
+          if (event.target.checkValidity()) {
+            const firstName = event.target.firstName.value;
+            const lastName = event.target.lastName.value;
+            const age = event.target.age.value;
+            const college = event.target.college.value;
+            const password = event.target.password.value;
+            const gender = event.target.gender.value;
+            const birthdate = event.target.birthdate.value;
+    
+            $("#msg").html("");
+            $.ajax({
+              type: "post",
+              url: "http://localhost:3000/",
+              data: JSON.stringify({
+                firstName,
+                lastName,
+                age,
+                college,
+                password,
+                gender,
+                birthdate,
+              }),
+              contentType: "application/json; charset=utf-8",
+              traditional: true,
+              success: function (data) {
+                fetchData(); // Reload data after successful submission
+                $("#msg").html("User Details Updated");
+              },
+            });
+          } else {
+            event.stopPropagation();
+          }
+    
+          event.target.classList.add("was-validated");
+        });
+      };
+    </script>
+    
+  </body>
+</html>

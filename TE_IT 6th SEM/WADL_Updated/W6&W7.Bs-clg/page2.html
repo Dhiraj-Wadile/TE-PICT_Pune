@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page 2</title>
+    <link href="assests\bootstrap.min.css" rel="stylesheet"
+    >
+    <!-- search in google for fontawesome cdn links -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="margin-right: 930px;">LOGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    <a class="nav-link" href="contact.html">Contact</a>
+                    <a class="nav-link" href="index.html">About Us</a>
+                    <a class="nav-link">Message <span class="badge bg-success">12</span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid my-5">
+        <h1>Dashboard:</h1>
+        <br>
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="border-top">
+                        <th>Name</th>
+                        <th>Team</th>
+                        <th>All Star</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-light">
+                        <td>Stemph</td>
+                        <td>Worriors</td>
+                        <td>Yes</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="removeRow(this)"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>Stemph</td>
+                        <td>Worriors</td>
+                        <td>Yes <span class="badge bg-success">First</span></td>
+                        <td>
+                            <button class="btn btn-danger" onclick="removeRow(this)"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>Stemph</td>
+                        <td>Worriors</td>
+                        <td>Yes</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="removeRow(this)"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>Stemph</td>
+                        <td>Worriors</td>
+                        <td>Yes</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="removeRow(this)"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>Stemph</td>
+                        <td>Worriors</td>
+                        <td>Yes <span class="badge bg-warning text-dark">Last</span></td>
+                        <td>
+                            <button class="btn btn-danger" onclick="removeRow(this)"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <h1>Todos:</h1>
+        <div>
+            <div class="alert m-0 alert-success">
+                Feel Good About Bootstrap
+            </div>
+            <div class="alert m-0 alert-info">
+                Feel Good About Bootstrap
+            </div>
+            <div class="alert m-0 alert-warning">
+                Feel Good About Bootstrap
+            </div>
+            <div class="alert m-0 alert-warning">
+                Feel Good About Bootstrap
+            </div>
+            <div class="alert m-0 alert-danger">
+                Feel Good About Bootstrap
+            </div>
+            <div class="alert m-0 alert-danger">
+                Feel Good About Bootstrap
+            </div>
+        </div>
+    </div>
+
+    <script src="assests\bootstrap.bundle.min.js"></script>
+    <script>
+        function removeRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+</body>
+
+</html>
